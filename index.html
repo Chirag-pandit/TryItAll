@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TryItAll</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #6200ea;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    section {
+      margin: 2rem;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #6200ea;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .card {
+      background: #f8f9fa;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .card:hover {
+      background-color: #eceff1;
+      transform: scale(1.05);
+    }
+    .video-links {
+      margin-top: 1rem;
+    }
+    .video-links iframe {
+      width: 100%;
+      height: 250px;
+      margin-bottom: 1rem;
+      border: none;
+    }
+    .search-bar {
+      margin: 1rem auto;
+      max-width: 600px;
+      text-align: center;
+    }
+    .search-bar input {
+      width: 80%;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>TryItAll - Your Learning Companion</h1>
+  </header>
+
+  <!-- Search Bar -->
+  <section class="search-bar">
+    <input type="text" id="search-input" placeholder="Search for a course or video..." oninput="searchContent()">
+  </section>
+
+  <!-- Classes Section -->
+  <section>
+    <h2>Classes 10th to 12th</h2>
+    <div class="grid" id="school-classes">
+      <div class="card" onclick="showCourses('10th')">Class 10th</div>
+      <div class="card" onclick="showCourses('11th')">Class 11th</div>
+      <div class="card" onclick="showCourses('12th')">Class 12th</div>
+    </div>
+  </section>
+
+  <!-- College Section -->
+  <section>
+    <h2>College Courses</h2>
+    <div class="grid" id="college-courses">
+      <div class="card" onclick="showCourses('bsc_cs')">BSc CS</div>
+      <div class="card" onclick="showCourses('bca')">BCA</div>
+      <div class="card" onclick="showCourses('btech')">BTech</div>
+      <div class="card" onclick="showCourses('bba')">BBA</div>
+      <div class="card" onclick="showCourses('balb')">BA LLB</div>
+      <div class="card" onclick="showCourses('polytechnic')">Polytechnic</div>
+      <div class="card" onclick="showCourses('pharmacy')">Pharmacy</div>
+    </div>
+  </section>
+
+  <!-- Video Links Section -->
+  <section id="videos-section">
+    <h2>Videos for Selected Course</h2>
+    <div class="video-links" id="video-links">
+      <p>Select a course to view videos.</p>
+    </div>
+  </section>
+
+  <script>
+    // Video Data for Courses
+    const videoData = {
+      bsc_cs: [
+        "https://www.youtube.com/embed/video1",
+        "https://www.youtube.com/embed/video2",
+        "https://www.youtube.com/embed/video3"
+      ],
+      bca: [
+        "https://www.youtube.com/embed/video4",
+        "https://www.youtube.com/embed/video5",
+        "https://www.youtube.com/embed/video6"
+      ],
+      btech: [
+        "https://www.youtube.com/embed/video7",
+        "https://www.youtube.com/embed/video8",
+        "https://www.youtube.com/embed/video9"
+      ],
+    };
+
+    // Show Course Videos
+    function showCourses(course) {
+      const linksContainer = document.getElementById('video-links');
+      linksContainer.innerHTML = '';
+
+      if (videoData[course]) {
+        videoData[course].forEach(link => {
+          const iframe = document.createElement('iframe');
+          iframe.src = link;
+          linksContainer.appendChild(iframe);
+        });
+      } else {
+        linksContainer.innerHTML = '<p>No videos available for this course.</p>';
+      }
+    }
+
+    // Search Functionality
+    function searchContent() {
+      const query = document.getElementById('search-input').value.toLowerCase();
+      const courseCards = document.querySelectorAll('.card');
+      const videoLinks = document.querySelectorAll('.video-links iframe');
+
+      // Search in courses
+      courseCards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(query) ? 'block' : 'none';
+      });
+
+      // Search in videos
+      videoLinks.forEach(video => {
+        const src = video.src.toLowerCase();
+        video.style.display = src.includes(query) ? 'block' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
